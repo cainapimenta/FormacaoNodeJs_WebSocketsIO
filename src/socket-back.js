@@ -1,5 +1,5 @@
+import { getDocumento, updateDocumento } from './documentosDb.js';
 import io from './server.js';
-import { documentosCollection } from './dbConnector.js';
 
 io.on("connection", (socket) => {
 	console.log(`Um cliente se conectou!!! ID: ${socket.id}`);
@@ -14,20 +14,11 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	socket.on("keyUp_editorTexto", ({ texto, nomeDocumento }) => {
-		const documento = getDocumento(nomeDocumento);
+	socket.on("keyUp_editorTexto", async ({ texto, nomeDocumento }) => {
+		const infoUpdate = await updateDocumento(nomeDocumento, texto);
 
-		if (documento) {
-			documento.texto = texto;
+		if (infoUpdate.modifiedCount) {
 			socket.to(nomeDocumento).emit("keyUp_editorTexto_client", texto);
 		}
 	});
 });
-
-function getDocumento(nome) {
-	const documento = documentosCollection.findOne({
-		nome: nome
-	});
-
-	return documento;
-}
