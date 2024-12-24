@@ -1,27 +1,13 @@
 import io from './server.js';
-
-const documentos = [
-	{
-		nome: "JavaScript",
-		texto: "Texto padrão JavaScript"
-	},
-	{
-		nome: "Node",
-		texto: "Texto padrão Node"
-	},
-	{
-		nome: "Socket.io",
-		texto: "Texto padrão Socket.io"
-	}
-]
+import { documentosCollection } from './dbConnector.js';
 
 io.on("connection", (socket) => {
 	console.log(`Um cliente se conectou!!! ID: ${socket.id}`);
 
-	socket.on("selecionar_documento", ({ nomeDocumento }, devolverTexto) => {
+	socket.on("selecionar_documento", async ({ nomeDocumento }, devolverTexto) => {
 		socket.join(nomeDocumento);
 
-		const documento = getDocumento(nomeDocumento);
+		const documento = await getDocumento(nomeDocumento);
 
 		if (documento) {
 			devolverTexto(documento.texto);
@@ -39,8 +25,8 @@ io.on("connection", (socket) => {
 });
 
 function getDocumento(nome) {
-	const documento = documentos.find((documento) => {
-		return documento.nome === nome;
+	const documento = documentosCollection.findOne({
+		nome: nome
 	});
 
 	return documento;
