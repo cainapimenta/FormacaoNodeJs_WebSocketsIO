@@ -8,10 +8,16 @@ const titulo_documento = document.getElementById("titulo-documento");
 
 titulo_documento.textContent = nomeDocumento || "Documento sem titulo";
 
-emitEvent("selecionar_documento", nomeDocumento);
+emitEvent("selecionar_documento", {
+	texto: "",
+	nomeDocumento
+});
 
 editor_texto.addEventListener("keyup", () => {
-	emitEvent("keyUp_editorTexto", editor_texto.value);
+	emitEvent("keyUp_editorTexto", {
+		texto: editor_texto.value,
+		nomeDocumento
+	});
 });
 
 function updateValueEditor(texto) {
