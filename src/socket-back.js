@@ -18,16 +18,23 @@ const documentos = [
 io.on("connection", (socket) => {
 	console.log(`Um cliente se conectou!!! ID: ${socket.id}`);
 
-	socket.on("selecionar_documento", ({ nomeDocumento }) => {
+	socket.on("selecionar_documento", ({ nomeDocumento }, devolverTexto) => {
+		socket.join(nomeDocumento);
+
 		const documento = getDocumento(nomeDocumento);
 
-		console.log("Documento", documento);
-
-		socket.join(nomeDocumento);
+		if (documento) {
+			devolverTexto(documento.texto);
+		}
 	});
 
 	socket.on("keyUp_editorTexto", ({ texto, nomeDocumento }) => {
-		socket.to(nomeDocumento).emit("keyUp_editorTexto_client", texto);
+		const documento = getDocumento(nomeDocumento);
+
+		if (documento) {
+			documento.texto = texto;
+			socket.to(nomeDocumento).emit("keyUp_editorTexto_client", texto);
+		}
 	});
 });
 

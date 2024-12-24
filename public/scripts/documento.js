@@ -10,7 +10,9 @@ titulo_documento.textContent = nomeDocumento || "Documento sem titulo";
 
 emitEvent("selecionar_documento", {
 	texto: "",
-	nomeDocumento
+	nomeDocumento,
+}, (texto) => {
+	updateValueEditor(texto);
 });
 
 editor_texto.addEventListener("keyup", () => {
