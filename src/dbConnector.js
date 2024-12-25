@@ -4,7 +4,6 @@ const mongoClient = new MongoClient("mongodb+srv://admin:B1admin%40@dbwebsockets
 
 let documentosCollection;
 
-
 async function connect() {
 	try {
 		await mongoClient.connect();
