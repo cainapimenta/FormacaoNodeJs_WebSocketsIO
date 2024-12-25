@@ -1,4 +1,4 @@
-import { addDocumento, getDocumento, getDocumentos, updateDocumento } from './documentosDb.js';
+import { addDocumento, deleteDocumento, getDocumento, getDocumentos, updateDocumento } from './documentosDb.js';
 import io from './server.js';
 
 io.on("connection", (socket) => {
@@ -29,6 +29,14 @@ io.on("connection", (socket) => {
 
 		if (documento) {
 			devolverTexto(documento.texto);
+		}
+	});
+
+	socket.on("excluir_documento", async (nome) => {
+		const resultado = await deleteDocumento(nome);
+
+		if (resultado.acknowledged) {
+			console.log("documento deletado");
 		}
 	});
 

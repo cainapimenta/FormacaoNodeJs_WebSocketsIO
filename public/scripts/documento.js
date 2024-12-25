@@ -5,6 +5,7 @@ const nomeDocumento = parametros.get("nome");
 
 const editor_texto = document.getElementById("editor-texto");
 const titulo_documento = document.getElementById("titulo-documento");
+const excluirDocumento = document.getElementById("excluir-documento");
 
 titulo_documento.textContent = nomeDocumento || "Documento sem titulo";
 
@@ -20,6 +21,10 @@ editor_texto.addEventListener("keyup", () => {
 		texto: editor_texto.value,
 		nomeDocumento
 	});
+});
+
+excluirDocumento.addEventListener("click", () => {
+	emitEvent("excluir_documento", nomeDocumento);
 });
 
 function updateValueEditor(texto) {

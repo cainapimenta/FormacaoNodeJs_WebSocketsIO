@@ -34,4 +34,12 @@ function updateDocumento(nome, texto) {
 	return infoUpdate;
 }
 
-export { getDocumentos, getDocumento, updateDocumento, addDocumento };
+function deleteDocumento(nome) {
+	const resultado = documentosCollection.deleteOne({
+		nome: nome
+	});
+
+	return resultado;
+}
+
+export { getDocumentos, getDocumento, updateDocumento, addDocumento, deleteDocumento };
