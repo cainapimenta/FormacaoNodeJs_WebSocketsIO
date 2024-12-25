@@ -6,6 +6,10 @@ function emitirAdicionarDocumento(nome) {
 	socket.emit("adicionar_documento", nome);
 }
 
+socket.on("documento_existente", (nome) => {
+	alert(`Documento ${nome} já cadastrado!`);
+});
+
 socket.on("adicionar_documento_interface", (nome) => {
 	insertLinkDocumento(nome);
 });

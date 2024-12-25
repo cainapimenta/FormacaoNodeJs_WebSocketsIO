@@ -3,10 +3,16 @@ import io from './server.js';
 
 io.on("connection", (socket) => {
 	socket.on("adicionar_documento", async (nome) => {
-		const resultado = await addDocumento(nome);
+		const documentoExiste = (await getDocumento(nome)) !== null;
 
-		if (resultado.acknowledged) {
-			io.emit("adicionar_documento_interface", nome);
+		if (documentoExiste) {
+			socket.emit("documento_existente", nome);
+		} else {
+			const resultado = await addDocumento(nome);
+
+			if (resultado.acknowledged) {
+				io.emit("adicionar_documento_interface", nome);
+			}
 		}
 	});
 
