@@ -14,10 +14,16 @@ formAdicionaDocumento.addEventListener("submit", (event) => {
 
 function insertLinkDocumento(nome) {
 	listaDocumentos.innerHTML += `
-		<a href="documento.html?nome=${nome}" class="list-group-item list-group-item-action">
+		<a id="documento-${nome}" href="documento.html?nome=${nome}" class="list-group-item list-group-item-action">
 			${nome}
       	</a>
 	`;
 }
 
-export { insertLinkDocumento }
+function removerLinkDocumento(nome) {
+	const linkDocumento = document.getElementById(`documento-${nome}`);
+
+	listaDocumentos.removeChild(linkDocumento);
+}
+
+export { insertLinkDocumento, removerLinkDocumento }

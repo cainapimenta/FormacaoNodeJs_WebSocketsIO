@@ -31,4 +31,11 @@ function updateValueEditor(texto) {
 	editor_texto.value = texto;
 }
 
-export { updateValueEditor };
+function alertarERedirecionar(nome) {
+	if (nome === nomeDocumento) {
+		alert(`Documento ${nome} excluido com sucesso!`);
+		window.location.href = "/";
+	}
+}
+
+export { updateValueEditor, alertarERedirecionar };
