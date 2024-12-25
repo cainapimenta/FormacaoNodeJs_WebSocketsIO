@@ -1,5 +1,10 @@
 import { documentosCollection } from './dbConnector.js';
 
+function getDocumentos() {
+	const documentos = documentosCollection.find().toArray();
+	return documentos;
+}
+
 function getDocumento(nome) {
 	const documento = documentosCollection.findOne({
 		nome: nome
@@ -20,4 +25,4 @@ function updateDocumento(nome, texto) {
 	return infoUpdate;
 }
 
-export { getDocumento, updateDocumento };
+export { getDocumentos, getDocumento, updateDocumento };
